@@ -12,19 +12,31 @@ def get_popular_movies():
     return response.json()
 
 # dictionary = get_popular_movies()
-# print(dictionary) - te dwa zapisy - żeby zobaczyć wynikw terminalu
+# print(dictionary) - te dwa zapisy - żeby zobaczyć wynik terminalu
 
 def get_poster_url(poster_api_path, size='W342'):
     base_url = "https://image.tmdb.org/t/p/"
     return f"{base_url}{size}/{poster_api_path}"
 
-def get_movies(how_many):
+
+
+def get_movies(how_many):       # do wersji bez list
     data = get_popular_movies()
-    beta = random.sample(data['results'], len(data['results'])) # wziąłem z komunikatora , dlaczego to działa? :D
+    beta = random.sample(data['results'], len(data['results'])) # wziąłem z komunikatora , dlaczego i jak to działa? :D a random.shuffle czy .choices nie?
     return beta[:how_many]
 
 # print(type(get_popular_movies())) # - to jest słownik
 # print(type(get_movies(1)))  # a to już lista?
+
+def get_movies2(list_type='popular', how_many=8): # funkcja dla list
+    endpoint = f"https://api.themoviedb.org/3/movie/{list_type}"
+    headers = {
+        "Authorization": f'Bearer {API_TOKEN}'
+    }
+    response = requests.get(endpoint, headers=headers)
+    response.raise_for_status()
+    data = response.json()
+    return data # wzięte z pewną modyfikacją z czatu, tj. bez sortowania i z odrzucenie w reurnie slicem z how_many bo nie rozponował go debugger - unhashable type
 
 def get_single_movie(movie_id):
     endpoint = f"https://api.themoviedb.org/3/movie/{movie_id}"
@@ -34,4 +46,11 @@ def get_single_movie(movie_id):
     response = requests.get(endpoint, headers=headers)
     return response.json()
 
+def get_single_movie_cast(movie_id):
+    endpoint = f"https://api.themoviedb.org/3/movie/{movie_id}/credits"
+    headers = {
+        "Authorization": f"Bearer {API_TOKEN}"
+    }
+    response = requests.get(endpoint, headers=headers)
+    return response.json()["cast"] # a czemu ten dopisek? Tworzymy cały czas jeden plik .json i wybieramy konkretne klucze z wartościami?
 
