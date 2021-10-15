@@ -6,9 +6,17 @@ app = Flask(__name__)
 
 @app.route('/')
 def homepage():
-    selected_list = request.args.get('list_type', "popular")
+    selected_list = request.args.get('list_type','popular')
+    movies = tmdb_client.get_movies3(how_many=8,list_type= selected_list)
+    return render_template('homepage.html', movies=movies,current_list = selected_list)
+
+"""
+@app.route('/')
+def homepage():
+    selected_list = request.args.get('list_type', 'popular')
     movies = tmdb_client.get_movies2(how_many=8, list_type = selected_list)
     return render_template('homepage.html', movies=movies, list_type = selected_list)
+"""
 
 """
 @app.route('/')
