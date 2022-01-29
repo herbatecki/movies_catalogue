@@ -17,7 +17,7 @@ def get_popular_movies():
 # dictionary = get_popular_movies()
 # print(dictionary) - te dwa zapisy - żeby zobaczyć wynik terminalu
 
-def get_poster_url(poster_api_path, size='W342'):
+def get_poster_url(poster_api_path, size='w342'):
     base_url = "https://image.tmdb.org/t/p/"
     return f"{base_url}{size}/{poster_api_path}"
 
