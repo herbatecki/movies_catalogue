@@ -1,10 +1,9 @@
 import requests
 import json
 import random
-
-
 from requests.models import HTTPError
-API_TOKEN = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIyYjBhNTA1ZjFhODE0MjAwYzE1NTgxZjEyNTRiYzhkNyIsInN1YiI6IjYxNTIyMzVjNjdkY2M5MDA4Y2U3MTJmMyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.gLDUgiPELKhb2kjwkyq0jYUuJxaIhLtTL-J3AqT2z2M"
+import os
+API_TOKEN = os.environ.get("TMDB_API_TOKEN", "")
 
 def get_popular_movies():
     endpoint = "https://api.themoviedb.org/3/movie/popular"
